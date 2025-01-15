@@ -1,36 +1,32 @@
-const socket = io();
-const button = document.getElementById('pressButton');
-const playerCount = document.getElementById('player-count');
-const timer = document.getElementById('timer');
-const statusMessage = document.getElementById('status-message');
+// Initialize Firebase
+const firebaseConfig = {
+    // Your Firebase config here
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-let isPressed = false;
+const gameRef = db.ref('game');
+const playersRef = db.ref('players');
 
-button.addEventListener('mousedown', handlePress);
-button.addEventListener('touchstart', handlePress);
-button.addEventListener('mouseup', handleRelease);
-button.addEventListener('touchend', handleRelease);
-button.addEventListener('mouseleave', handleRelease);
+// Track button state
+button.addEventListener('mousedown', () => {
+    const myId = firebase.auth().currentUser.uid;
+    playersRef.child(myId).set(true);
+});
 
-function handlePress(e) {
-    e.preventDefault();
-    if (!isPressed) {
-        isPressed = true;
-        button.style.transform = 'scale(0.95)';
-        socket.emit('buttonPress');
-    }
-}
+button.addEventListener('mouseup', () => {
+    const myId = firebase.auth().currentUser.uid;
+    playersRef.child(myId).remove();
+});
 
-function handleRelease(e) {
-    e.preventDefault();
-    if (isPressed) {
-        isPressed = false;
-        button.style.transform = 'scale(1)';
-        socket.emit('buttonRelease');
-    }
-}
+// Listen for changes
+playersRef.on('value', (snapshot) => {
+    const players = snapshot.val() || {};
+    const count = Object.keys(players).length;
+    updateUI(count);
+});
 
-socket.on('playerCount', (count) => {
+function updateUI(count) {
     playerCount.textContent = count;
     if (count === 2) {
         statusMessage.textContent = 'Hold the button! Opening vault...';
@@ -39,7 +35,7 @@ socket.on('playerCount', (count) => {
     } else {
         statusMessage.textContent = 'Waiting for more players...';
     }
-});
+}
 
 socket.on('timerUpdate', (timeLeft) => {
     timer.textContent = timeLeft;

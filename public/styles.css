@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap');
+
+body {
+    font-family: 'Roboto Slab', serif;
+    background-color: #1a1f35;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #242b45;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 255, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+h1 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 157, 255, 0.3);
+}
+
+.game-status {
+    margin-bottom: 1.5rem;
+}
+
+.game-status p {
+    margin: 0.5rem 0;
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    color: #fff;
+}
+
+.vault-button button {
+    width: clamp(150px, 50vw, 200px);
+    height: clamp(150px, 50vw, 200px);
+    border-radius: 50%;
+    border: 3px solid #0066cc;
+    background-color: #003366;
+    color: white;
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    font-family: 'Roboto Slab', serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 157, 255, 0.3);
+}
+
+.vault-button button:active {
+    transform: scale(0.95);
+    background-color: #004488;
+    box-shadow: 0 0 30px rgba(0, 157, 255, 0.5);
+}
+
+.vault-button button::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(0, 157, 255, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.messages {
+    margin-top: 1.5rem;
+}
+
+#status-message {
+    font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+    color: #a0a8c0;
+}
+
+/* Media Queries for very small devices */
+@media (max-width: 320px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .vault-button button {
+        width: 120px;
+        height: 120px;
+    }
+} 

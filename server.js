@@ -20,9 +20,11 @@ let gameState = {
 };
 
 io.on('connection', (socket) => {
+    console.log('A user connected');
     console.log('User connected:', socket.id);
 
     socket.on('buttonPress', () => {
+        console.log('Button pressed');
         gameState.playersPressed.add(socket.id);
         checkGameState();
     });
@@ -35,6 +37,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         gameState.playersPressed.delete(socket.id);
         resetGame();
+        console.log('User disconnected');
         console.log('User disconnected:', socket.id);
     });
 

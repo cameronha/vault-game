@@ -19,6 +19,11 @@ button.addEventListener('mouseup', () => {
     playersRef.child(myId).remove();
 });
 
+button.addEventListener('click', () => {
+    console.log('Button clicked');
+    socket.emit('buttonPress');
+});
+
 // Listen for changes
 playersRef.on('value', (snapshot) => {
     const players = snapshot.val() || {};
